@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveUTS — Conoce a tu alma gemela</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #0a4a2e;
+    --green-mid: #1a6e47;
+    --green-light: #e8f5ee;
+    --pink: #c4607a;
+    --pink-light: #f0c8d2;
+    --pink-deep: #9e3a54;
+    --cream: #fdf6f0;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--green);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(196,96,122,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    right: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(196,96,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hearts-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .heart-float {
+    position: absolute;
+    opacity: 0.06;
+    font-size: 4rem;
+    animation: floatUp 12s infinite ease-in-out;
+  }
+
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0) rotate(-10deg); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(196,96,122,0.2);
+    border: 1px solid rgba(196,96,122,0.4);
+    color: var(--pink-light);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+  }
+
+  .logo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 14vw, 7rem);
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo-title .love {
+    display: block;
+  }
+
+  .logo-title .uts {
+    display: block;
+    color: var(--pink-light);
+  }
+
+  .tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-desc {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-desc strong {
+    color: var(--pink-light);
+    font-weight: 500;
+  }
+
+  /* Download button */
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--pink);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 18px 36px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 30px rgba(196,96,122,0.35);
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-download:hover {
+    background: var(--pink-deep);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px rgba(196,96,122,0.5);
+  }
+
+  .btn-download:active {
+    transform: translateY(0);
+  }
+
+  .btn-download svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .btn-note {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    margin-top: 1rem;
+  }
+
+  /* Stats */
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--pink-light);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* FEATURES */
+  .features {
+    background: var(--cream);
+    color: var(--green);
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: left;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(196,96,122,0.12), rgba(196,96,122,0.22));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: #5a6a5e;
+    line-height: 1.6;
+  }
+
+  /* HOW IT WORKS */
+  .how {
+    background: var(--green);
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  .how .section-title {
+    color: var(--white);
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 560px;
+    margin: 0 auto 3rem;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    text-align: left;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--pink);
+    line-height: 1;
+    min-width: 36px;
+  }
+
+  .step-text h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .step-text p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* CTA final */
+  .cta {
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink));
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  .cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .cta p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .btn-download-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    color: var(--pink-deep);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 16px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  }
+
+  .btn-download-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 36px rgba(0,0,0,0.3);
+  }
+
+  /* Footer */
+  footer {
+    background: #071f12;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 1.8rem;
+    font-size: 0.82rem;
+  }
+
+  footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+
+  /* Android pill */
+  .android-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hearts-bg">
+    <span class="heart-float" style="left:5%;top:15%;animation-delay:0s;">♥</span>
+    <span class="heart-float" style="left:85%;top:20%;animation-delay:3s;font-size:3rem;">♥</span>
+    <span class="heart-float" style="left:15%;top:70%;animation-delay:6s;font-size:2rem;">♥</span>
+    <span class="heart-float" style="left:75%;top:65%;animation-delay:1.5s;font-size:5rem;">♥</span>
+    <span class="heart-float" style="left:50%;top:5%;animation-delay:4s;font-size:2.5rem;">♥</span>
+  </div>
+
+  <div class="badge">
+    <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+    Disponible para Android
+  </div>
+
+  <h1 class="logo-title">
+    <span class="love">Love</span>
+    <span class="uts">UTS</span>
+  </h1>
+  <p class="tagline">Conoce a tu alma gemela</p>
+
+  <p class="hero-desc">
+    La app de citas pensada para <strong>estudiantes de la UTS</strong>. Conecta con personas que comparten tus intereses, tu campus y tu visión del amor.
+  </p>
+
+  <a href="loveuts.apk" download class="btn-download">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    Descargar LoveUTS — Gratis
+  </a>
+
+  <p class="btn-note">APK • Android 6.0 o superior</p>
+  <div class="android-pill">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.341l1.505 2.607a.5.5 0 01-.183.683.5.5 0 01-.683-.183l-1.527-2.646A8.498 8.498 0 0112 16.5a8.498 8.498 0 01-4.635-1.698L5.838 17.448a.5.5 0 01-.683.183.5.5 0 01-.183-.683l1.505-2.607A8.462 8.462 0 013.5 8.5h17a8.462 8.462 0 01-2.977 6.841zM9 11a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2zM7.336 4.13l-1.5-2.598a.5.5 0 01.866-.5l1.521 2.634A8.488 8.488 0 0112 3c1.48 0 2.87.378 4.079 1.042l1.52-2.634a.5.5 0 01.867.5L17 4.13A8.478 8.478 0 0120.5 8h-17a8.478 8.478 0 013.836-3.87z"/></svg>
+    Solo para Android
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Gratuita</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">UTS</span>
+      <span class="stat-label">Exclusiva</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">❤</span>
+      <span class="stat-label">Con amor</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <p class="section-label">¿Por qué LoveUTS?</p>
+  <h2 class="section-title">Más que una app de citas</h2>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3 class="feature-title">Solo UTS</h3>
+      <p class="feature-desc">Conéctate únicamente con estudiantes y personas de tu comunidad universitaria.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3 class="feature-title">Chat en tiempo real</h3>
+      <p class="feature-desc">Conversa al instante cuando hay un match. Sin esperas, sin filtros complicados.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3 class="feature-title">Privacidad primero</h3>
+      <p class="feature-desc">Tu información solo es visible para quien tú decidas. Control total sobre tu perfil.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✨</div>
+      <h3 class="feature-title">Perfiles reales</h3>
+      <p class="feature-desc">Comunidad verificada. Mucho menos spam, muchas más conexiones genuinas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <p class="section-label">Paso a paso</p>
+  <h2 class="section-title">Empieza en 3 pasos</h2>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">1</span>
+      <div class="step-text">
+        <h3>Descarga e instala</h3>
+        <p>Descarga el APK, habilita instalación desde fuentes desconocidas y listo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <div class="step-text">
+        <h3>Crea tu perfil</h3>
+        <p>Sube fotos, cuéntate a ti mismo y elige qué tipo de conexión buscas.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <div class="step-text">
+        <h3>Conecta y conversa</h3>
+        <p>Haz match con personas afines y empieza a chatear sin complicaciones.</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="loveuts.apk" download class="btn-download">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    Descargar ahora — Gratis
+  </a>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Tu alma gemela te está esperando</h2>
+  <p>Descarga LoveUTS y empieza tu historia hoy.</p>
+  <a href="loveuts.apk" download class="btn-download-white">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    Descargar LoveUTS.apk
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 LoveUTS — Hecho con ❤ para la comunidad UTS &nbsp;|&nbsp; <a href="#">Política de privacidad</a></p>
+</footer>
+
+</body>
+</html>
